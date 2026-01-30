@@ -1,7 +1,11 @@
 apiVersion: v2
-name: shiny-app-template
-version: 1.0.0
+name: consultation-bte
+description: Helm chart pour déployer l'application Consultation BTE
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+
 dependencies:
   - name: shiny
-    version: 0.16.0
-    repository: https://inseefrlab.github.io/helm-charts
+    version: "2.0.22"
+    repository: https://inseefrlab.github.io/helm-charts-shiny-apps

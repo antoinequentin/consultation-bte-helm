@@ -1,35 +1,42 @@
+# Configuration de l'image Docker
 shiny:
   image:
-    repository: inseefrlab/shiny-app-template
-    tag: "1.0.1"
+    repository: VOTRE_USERNAME_DOCKERHUB/consultation-bte-app
+    tag: latest
     pullPolicy: Always
+
+  # Configuration de l'Ingress (URL d'accès)
   ingress:
     enabled: true
-    hostname: myshinyapp.lab.sspcloud.fr
-  s3:
-    enabled: true
-    existingSecret: myshinyapp-s3
-  postgresql:
-    enabled: true
-    auth:
-      username: myusername
-      database: defaultdb
-      existingSecret: myshinyapp-postgresql
-    containerPorts:
-      postgresql: 5432
-    fullnameOverride: postgresql-db
-    primary:
-      persistence:
-        size: 2Gi
-  resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+    hostname: "consultation-bte.lab.sspcloud.fr"
+    tls: true
 
+  # Ressources allouées
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+    requests:
+      cpu: 100m
+      memory: 512Mi
+
+  # Stockage S3/MinIO (si vous utilisez MinIO)
+  s3:
+    enabled: false  # Mettez true si vous voulez utiliser MinIO
+    existingSecret: "consultation-bte-s3"
+
+  # Base de données PostgreSQL (si nécessaire)
+  postgresql:
+    enabled: false  # Mettez true si vous voulez une base de données
+    username: consultation
+    database: consultation_db
+    fullnameOverride: consultation-postgresql
+    existingSecret: "consultation-bte-postgresql"
+
+  # Réplicats (nombre d'instances)
+  replicaCount: 1
+
+  # Variable d'environnement pour le mot de passe admin
+  env:
+    - name: ADMIN_PASSWORD
+      value: "ChangezMoiEnProduction123!"
