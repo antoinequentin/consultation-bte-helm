@@ -39,4 +39,4 @@ shiny:
   # Variable d'environnement pour le mot de passe admin
   env:
     - name: ADMIN_PASSWORD
-      value: "ChangezMoiEnProduction123!"
+      value: "ChangezMoiEnProduction12!"
